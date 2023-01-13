@@ -3,11 +3,11 @@ import { HomePagePreview } from 'components/pages/home/HomePagePreview'
 import { PreviewSuspense } from 'components/preview/PreviewSuspense'
 import { PreviewWrapper } from 'components/preview/PreviewWrapper'
 import { getHomePage } from 'lib/sanity.client'
-import { previewData } from 'next/headers'
+import { getPreviewToken } from 'lib/sanity.server.preview'
 import { notFound } from 'next/navigation'
 
 export default async function IndexRoute() {
-  const token = previewData().token || null
+  const token = getPreviewToken()
   const data = (await getHomePage({ token })) || {
     title: '',
     overview: [],

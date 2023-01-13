@@ -3,7 +3,7 @@ import { PagePreview } from 'components/pages/page/PagePreview'
 import { PreviewSuspense } from 'components/preview/PreviewSuspense'
 import { PreviewWrapper } from 'components/preview/PreviewWrapper'
 import { getPageBySlug } from 'lib/sanity.client'
-import { previewData } from 'next/headers'
+import { getPreviewToken } from 'lib/sanity.server.preview'
 import { notFound } from 'next/navigation'
 
 export default async function PageSlugRoute({
@@ -12,7 +12,7 @@ export default async function PageSlugRoute({
   params: { slug: string }
 }) {
   const { slug } = params
-  const token = previewData().token || null
+  const token = getPreviewToken()
   const data = await getPageBySlug({ slug })
 
   if (!data && !token) {

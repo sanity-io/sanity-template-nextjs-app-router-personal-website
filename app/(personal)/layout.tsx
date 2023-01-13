@@ -5,14 +5,14 @@ import { Navbar } from 'components/global/Navbar'
 import { PreviewBanner } from 'components/preview/PreviewBanner'
 import IntroTemplate from 'intro-template'
 import { getSettings } from 'lib/sanity.client'
-import { previewData } from 'next/headers'
+import { getPreviewToken } from 'lib/sanity.server.preview'
 
 export default async function IndexRoute({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const token = previewData().token
+  const token = getPreviewToken()
   const settings = (await getSettings({ token })) || {
     menuItems: [],
     footer: [],

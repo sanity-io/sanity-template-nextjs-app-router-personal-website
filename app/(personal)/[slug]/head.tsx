@@ -1,10 +1,10 @@
 import { toPlainText } from '@portabletext/react'
 import { SiteMeta } from 'components/global/SiteMeta'
 import { getHomePageTitle, getPageBySlug, getSettings } from 'lib/sanity.client'
-import { previewData } from 'next/headers'
+import { getPreviewToken } from 'lib/sanity.server.preview'
 
 export default async function PageHead() {
-  const token = previewData().token
+  const token = getPreviewToken()
 
   const [homePageTitle, page, settings] = await Promise.all([
     getHomePageTitle({ token }),
