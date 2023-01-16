@@ -5,9 +5,9 @@ This starter is a statically generated personal website that uses [Next.js][next
 The Studio connects to Sanity Content Lake, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more. You can use this starter to kick-start a personal website or learn these technologies.
 
 > **Note**
-> 
-> This repo uses the experimental [app][app-dir] directory for Next.js routing. 
-> 
+>
+> This repo uses the experimental [app][app-dir] directory for Next.js routing.
+>
 > For a production ready alternative, use [template-nextjs-personal-website][personal-website-pages] instead.
 
 [![Deploy with Vercel](https://vercel.com/button)][vercel-deploy]
@@ -41,22 +41,22 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 
 ## Project Overview
 
-| [Personal Website](https://nextjs-personal-website-app-dir.sanity.build)                                                          | [Studio](https://nextjs-personal-website.sanity.build/studio)                                                          |
+| [Personal Website](https://nextjs-personal-website-app-dir.sanity.build)                                                  | [Studio](https://nextjs-personal-website.sanity.build/studio)                                                          |
 | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | ![Personal Website](https://user-images.githubusercontent.com/6951139/206395107-e58a796d-13a9-400a-94b6-31cb5df054ab.png) | ![Sanity Studio](https://user-images.githubusercontent.com/6951139/206395521-8a5f103d-4a0c-4da8-aff5-d2a1961fb2c0.png) |
 
 ### Important files and folders
 
-| File(s)                                     | Description                                              |
-|---------------------------------------------| -------------------------------------------------------- |
+| File(s)                                     | Description                                             |
+| ------------------------------------------- | ------------------------------------------------------- |
 | `sanity.config.ts`                          | Config file for Sanity Studio                           |
 | `sanity.cli.ts`                             | Config file for Sanity CLI                              |
 | `/app/studio/[[...index]]/page.tsx`         | Where Sanity Studio is mounted                          |
 | `/pages/api/preview.ts`                     | Serverless route for triggering Preview mode            |
 | `/schemas`                                  | Where Sanity Studio gets its content types from         |
 | `/plugins`                                  | Where the advanced Sanity Studio customization is setup |
-| `/lib/sanity.api.ts`,`/lib/sanity.image.ts` | Configuration for the Sanity Content Lake client         |
-| `/lib/sanity.preview.ts`                    | Configuration for the live Preview Mode                  |
+| `/lib/sanity.api.ts`,`/lib/sanity.image.ts` | Configuration for the Sanity Content Lake client        |
+| `/lib/sanity.preview.ts`                    | Configuration for the live Preview Mode                 |
 
 ## Configuration
 
