@@ -4,7 +4,9 @@ This starter is a statically generated personal website that uses [Next.js][next
 
 The Studio connects to Sanity Content Lake, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more. You can use this starter to kick-start a personal website or learn these technologies.
 
-> :warning: This repo uses the experimental [app][app-dir] directory for pages. 
+> **Note**
+> 
+> This repo uses the experimental [app][app-dir] directory for Next.js routing. 
 > 
 > For a production ready alternative, use [template-nextjs-personal-website][personal-website-pages] instead.
 
