@@ -145,4 +145,4 @@ You can remove it by deleting the `IntroTemplate` component in `/app/(personal)/
 [vercel]: https://vercel.com
 [vercel-github]: https://github.com/vercel/next.js/discussions
 [personal-website-pages]: https://github.com/sanity-io/sanity-template-nextjs-appdir-personal-website
-[app-dir]: (https://beta.nextjs.org/docs/routing/fundamentals#the-app-directory)
+[app-dir]: https://beta.nextjs.org/docs/routing/fundamentals#the-app-directory
