@@ -24,14 +24,14 @@ export default async function ProjectSlugRoute({
         <PreviewSuspense
           fallback={
             <PreviewWrapper>
-              <ProjectPage data={data} />
+              <ProjectPage data={data!} />
             </PreviewWrapper>
           }
         >
           <ProjectPreview token={token} slug={params.slug} />
         </PreviewSuspense>
       ) : (
-        <ProjectPage data={data} />
+        <ProjectPage data={data!} />
       )}
     </>
   )

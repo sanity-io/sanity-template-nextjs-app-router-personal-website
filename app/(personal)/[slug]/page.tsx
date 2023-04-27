@@ -25,14 +25,14 @@ export default async function PageSlugRoute({
         <PreviewSuspense
           fallback={
             <PreviewWrapper>
-              <Page data={data} />
+              <Page data={data!} />
             </PreviewWrapper>
           }
         >
           <PagePreview token={token} slug={params.slug} />
         </PreviewSuspense>
       ) : (
-        <Page data={data} />
+        <Page data={data!} />
       )}
     </>
   )

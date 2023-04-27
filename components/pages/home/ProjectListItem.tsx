@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from '@portabletext/types'
 import { CustomPortableText } from 'components/shared/CustomPortableText'
 import ImageBox from 'components/shared/ImageBox'
 import type { ShowcaseProject } from 'types'
@@ -13,7 +14,7 @@ export function ProjectListItem(props: ProjectProps) {
   return (
     <div
       className={`flex flex-col gap-x-5 p-2 transition hover:bg-gray-50/50 xl:flex-row ${
-        odd && 'border-t border-b xl:flex-row-reverse'
+        odd && 'border-b border-t xl:flex-row-reverse'
       }`}
     >
       <div className="w-full xl:w-9/12">
@@ -40,7 +41,7 @@ function TextBox({ project }: { project: ShowcaseProject }) {
         </div>
         {/* Overview  */}
         <div className="font-serif text-gray-500">
-          <CustomPortableText value={project.overview} />
+          <CustomPortableText value={project.overview as PortableTextBlock[]} />
         </div>
       </div>
       {/* Tags */}
