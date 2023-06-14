@@ -2,7 +2,6 @@
  * This plugin contains all the logic for setting up the singletons
  */
 
-import { apiVersion, previewSecretId } from 'lib/sanity.api'
 import { type DocumentDefinition } from 'sanity'
 import { type StructureResolver } from 'sanity/desk'
 
@@ -59,17 +58,7 @@ export const pageStructure = (
               S.view.form(),
               // Preview
               ...(PREVIEWABLE_DOCUMENT_TYPES.includes(typeDef.name)
-                ? [
-                    S.view
-                      .component((props) => (
-                        <PreviewPane
-                          previewSecretId={previewSecretId}
-                          apiVersion={apiVersion}
-                          {...props}
-                        />
-                      ))
-                      .title('Preview'),
-                  ]
+                ? [S.view.component(PreviewPane).title('Preview')]
                 : []),
             ])
         )

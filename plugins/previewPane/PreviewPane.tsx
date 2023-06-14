@@ -1,5 +1,6 @@
 import { Card, Text } from '@sanity/ui'
 import { resolveHref } from 'lib/sanity.links'
+import { apiVersion, previewSecretId } from 'lib/sanity.api'
 import { getSecret } from 'plugins/productionUrl/utils'
 import { ComponentProps, Suspense } from 'react'
 import { memo } from 'react'
@@ -20,12 +21,9 @@ interface IframeProps {
 }
 
 export function PreviewPane(
-  props: PreviewProps & {
-    previewSecretId: `${string}.${string}`
-    apiVersion: string
-  }
+  props: PreviewProps
 ) {
-  const { document, previewSecretId, apiVersion } = props
+  const { document } = props
   const { displayed } = document
   const documentType = displayed?._type
   let slug = (displayed?.slug as any)?.current
