@@ -41,6 +41,7 @@ export interface PagePayload {
   name?: string
   overview?: PortableTextBlock[]
   title?: string
+  slug?: string
 }
 
 export interface ProjectPayload {
