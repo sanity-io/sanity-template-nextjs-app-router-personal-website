@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-interface PreviewBannerProps {
-  loading?: boolean
-}
 
-export function PreviewBanner({ loading }: PreviewBannerProps) {
+export function PreviewBanner() {
   return (
     <div className="bg-black p-3 text-center text-white">
-      {loading ? 'Loading...' : 'Previewing draft content.'}{' '}
+      {'Previewing draft content. '}
       <a
         className="underline transition hover:opacity-50"
         href="/api/exit-preview"
