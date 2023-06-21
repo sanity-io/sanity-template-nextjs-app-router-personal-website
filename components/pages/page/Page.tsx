@@ -3,7 +3,11 @@ import { Header } from 'components/shared/Header'
 import ScrollUp from 'components/shared/ScrollUp'
 import type { PagePayload } from 'types'
 
-export function Page({ data }: { data: PagePayload | null }) {
+export interface PageProps {
+  data: PagePayload | null
+}
+
+export function Page({ data }: PageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { body, overview, title } = data ?? {}
 

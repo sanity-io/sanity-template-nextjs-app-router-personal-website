@@ -1,8 +1,6 @@
 import { toPlainText } from '@portabletext/react'
 import { Page } from 'components/pages/page/Page'
-import { PagePreview } from 'components/pages/page/PagePreview'
-import { PreviewSuspense } from 'components/preview/PreviewSuspense'
-import { PreviewWrapper } from 'components/preview/PreviewWrapper'
+import PagePreview from 'components/pages/page/PagePreview'
 import { readToken } from 'lib/sanity.api'
 import { getClient } from 'lib/sanity.client'
 import {
@@ -58,21 +56,5 @@ export default async function PageSlugRoute({ params }: Props) {
     notFound()
   }
 
-  return (
-    <>
-      {preview ? (
-        <PreviewSuspense
-          fallback={
-            <PreviewWrapper>
-              <Page data={data} />
-            </PreviewWrapper>
-          }
-        >
-          <PagePreview token={preview.token} slug={params.slug} />
-        </PreviewSuspense>
-      ) : (
-        <Page data={data} />
-      )}
-    </>
-  )
+  return preview ? <PagePreview data={data} /> : <Page data={data} />
 }
