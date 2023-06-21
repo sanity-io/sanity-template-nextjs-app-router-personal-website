@@ -7,6 +7,7 @@ import { readToken } from 'lib/sanity.api'
 import { getClient } from 'lib/sanity.client'
 import {
   homePageTitleQuery,
+  pagePaths,
   pagesBySlugQuery,
   settingsQuery,
 } from 'lib/sanity.queries'
@@ -37,6 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     image: settings?.ogImage,
     title: page?.title,
   })
+}
+
+export async function generateStaticParams() {
+  const client = getClient()
+  const slugs = await client.fetch<string[]>(pagePaths)
+  return slugs.map((slug) => ({ slug }))
 }
 
 export default async function PageSlugRoute({ params }: Props) {

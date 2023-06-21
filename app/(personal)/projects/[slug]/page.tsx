@@ -5,7 +5,11 @@ import { PreviewSuspense } from 'components/preview/PreviewSuspense'
 import { PreviewWrapper } from 'components/preview/PreviewWrapper'
 import { readToken } from 'lib/sanity.api'
 import { getClient } from 'lib/sanity.client'
-import { homePageTitleQuery, projectBySlugQuery } from 'lib/sanity.queries'
+import {
+  homePageTitleQuery,
+  projectBySlugQuery,
+  projectPaths,
+} from 'lib/sanity.queries'
 import { defineMetadata } from 'lib/utils.metadata'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
@@ -34,6 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     image: project?.coverImage,
     title: project?.title,
   })
+}
+
+export async function generateStaticParams() {
+  const client = getClient()
+  const slugs = await client.fetch<string[]>(projectPaths)
+  return slugs.map((slug) => ({ slug }))
 }
 
 export default async function ProjectSlugRoute({ params }: Props) {
