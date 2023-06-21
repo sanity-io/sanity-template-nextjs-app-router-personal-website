@@ -5,9 +5,9 @@ import { resolveHref } from 'lib/sanity.links'
 import Link from 'next/link'
 import type { HomePagePayload } from 'types'
 
-export function HomePage({ data }: { data: HomePagePayload }) {
+export function HomePage({ data }: { data: HomePagePayload | null }) {
   // Default to an empty object to allow previews on non-existent documents
-  const { overview, showcaseProjects, title } = data
+  const { overview = [], showcaseProjects = [], title = '' } = data ?? {}
 
   return (
     <div className="space-y-20">
