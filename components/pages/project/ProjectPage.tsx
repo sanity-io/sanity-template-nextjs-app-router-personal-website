@@ -5,7 +5,11 @@ import ScrollUp from 'components/shared/ScrollUp'
 import Link from 'next/link'
 import type { ProjectPayload } from 'types'
 
-export function ProjectPage({ data }: { data: ProjectPayload | null }) {
+export interface ProjectPageProps {
+  data: ProjectPayload | null
+}
+
+export function ProjectPage({ data }: ProjectPageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const {
     client,

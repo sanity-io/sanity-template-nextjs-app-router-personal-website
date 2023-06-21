@@ -4,6 +4,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { Footer } from 'components/global/Footer'
 import { Navbar } from 'components/global/Navbar'
 import { PreviewBanner } from 'components/preview/PreviewBanner'
+import PreviewProvider from 'components/preview/PreviewProvider'
 import IntroTemplate from 'intro-template'
 import { readToken } from 'lib/sanity.api'
 import { getClient } from 'lib/sanity.client'
@@ -27,7 +28,7 @@ export default async function IndexRoute({
     (await client.fetch<SettingsPayload | null>(settingsQuery)) ??
     fallbackSettings
 
-  return (
+  const layout = (
     <div className="flex min-h-screen flex-col bg-white text-black">
       {preview && <PreviewBanner />}
       <Navbar menuItems={settings.menuItems} />
@@ -36,4 +37,10 @@ export default async function IndexRoute({
       <IntroTemplate />
     </div>
   )
+
+  if (preview) {
+    return <PreviewProvider token={preview.token}>{layout}</PreviewProvider>
+  }
+
+  return layout
 }

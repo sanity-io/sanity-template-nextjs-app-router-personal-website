@@ -1,8 +1,6 @@
 import { toPlainText } from '@portabletext/react'
 import { HomePage } from 'components/pages/home/HomePage'
-import { HomePagePreview } from 'components/pages/home/HomePagePreview'
-import { PreviewSuspense } from 'components/preview/PreviewSuspense'
-import { PreviewWrapper } from 'components/preview/PreviewWrapper'
+import HomePagePreview from 'components/pages/home/HomePagePreview'
 import { readToken } from 'lib/sanity.api'
 import { getClient } from 'lib/sanity.client'
 import { homePageQuery, settingsQuery } from 'lib/sanity.queries'
@@ -37,23 +35,5 @@ export default async function IndexRoute() {
     notFound()
   }
 
-  return (
-    <>
-      {preview ? (
-        <>
-          <PreviewSuspense
-            fallback={
-              <PreviewWrapper>
-                <HomePage data={data} />
-              </PreviewWrapper>
-            }
-          >
-            <HomePagePreview token={preview.token} />
-          </PreviewSuspense>
-        </>
-      ) : (
-        <HomePage data={data} />
-      )}
-    </>
-  )
+  return preview ? <HomePagePreview data={data} /> : <HomePage data={data} />
 }
