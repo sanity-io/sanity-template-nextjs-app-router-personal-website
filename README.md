@@ -14,7 +14,7 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 
 ## Features
 
-- A performant, static personal personal website with editable projects
+- A performant, static personal website with editable projects
 - A native and customizable authoring environment, accessible on `yourpersonalwebsite.com/studio`
 - Real-time and collaborative content editing with fine-grained revision history
 - Side-by-side instant content preview that works across your whole site
@@ -56,7 +56,6 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 | `/schemas`                                  | Where Sanity Studio gets its content types from         |
 | `/plugins`                                  | Where the advanced Sanity Studio customization is setup |
 | `/lib/sanity.api.ts`,`/lib/sanity.image.ts` | Configuration for the Sanity Content Lake client        |
-| `/lib/sanity.preview.ts`                    | Configuration for the live Preview Mode                 |
 
 ## Configuration
 
