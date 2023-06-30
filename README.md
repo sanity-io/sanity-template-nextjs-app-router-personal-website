@@ -143,5 +143,5 @@ You can remove it by deleting the `IntroTemplate` component in `/app/(personal)/
 [localhost-3000-studio]: http://localhost:3000/studio
 [vercel]: https://vercel.com
 [vercel-github]: https://github.com/vercel/next.js/discussions
-[personal-website-pages]: https://github.com/sanity-io/sanity-template-nextjs-app-router-personal-website
+[personal-website-pages]: https://github.com/sanity-io/template-nextjs-personal-website
 [app-dir]: https://beta.nextjs.org/docs/routing/fundamentals#the-app-directory
