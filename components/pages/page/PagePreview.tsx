@@ -12,7 +12,7 @@ export default function PagePreview({ data: initialData }: PageProps) {
     pagesBySlugQuery,
     {
       slug: initialData?.slug,
-    }
+    },
   )
 
   return <Page data={data ?? initialData} />

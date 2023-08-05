@@ -9,7 +9,7 @@ import { HomePage, type HomePageProps } from './HomePage'
 export default function HomePagePreview({ data: initialData }: HomePageProps) {
   const [data] = useLiveQuery<HomePagePayload | null>(
     initialData,
-    homePageQuery
+    homePageQuery,
   )
 
   if (!data) {

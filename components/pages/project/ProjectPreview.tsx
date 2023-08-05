@@ -14,7 +14,7 @@ export default function ProjectPreview({
     projectBySlugQuery,
     {
       slug: initialData?.slug,
-    }
+    },
   )
 
   return <ProjectPage data={data} />
