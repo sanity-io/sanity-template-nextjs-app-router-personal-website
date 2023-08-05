@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   const token = readToken
   if (!token) {
     throw new Error(
-      'A secret is provided but there is no `SANITY_API_READ_TOKEN` environment variable setup.'
+      'A secret is provided but there is no `SANITY_API_READ_TOKEN` environment variable setup.',
     )
   }
   const client = getClient().withConfig({ useCdn: false, token })
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
   if (!href) {
     return new Response(
       'Unable to resolve preview URL based on the current document type and slug',
-      { status: 400 }
+      { status: 400 },
     )
   }
 
