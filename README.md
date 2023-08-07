@@ -41,7 +41,7 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 
 ## Project Overview
 
-| [Personal Website](https://nextjs-personal-website-app-dir.sanity.build)                                                  | [Studio](https://nextjs-personal-website.sanity.build/studio)                                                          |
+| [Personal Website](https://template-nextjs-app-router-personal-website.sanity.build/)                                     | [Studio](https://template-nextjs-app-router-personal-website.sanity.build/studio)                                      |
 | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | ![Personal Website](https://user-images.githubusercontent.com/6951139/206395107-e58a796d-13a9-400a-94b6-31cb5df054ab.png) | ![Sanity Studio](https://user-images.githubusercontent.com/6951139/206395521-8a5f103d-4a0c-4da8-aff5-d2a1961fb2c0.png) |
 
@@ -52,7 +52,7 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 | `sanity.config.ts`                          | Config file for Sanity Studio                           |
 | `sanity.cli.ts`                             | Config file for Sanity CLI                              |
 | `/app/studio/[[...index]]/page.tsx`         | Where Sanity Studio is mounted                          |
-| `/pages/api/preview.ts`                     | Serverless route for triggering Preview mode            |
+| `/pages/api/draft.ts`                       | Serverless route for triggering Draft mode              |
 | `/schemas`                                  | Where Sanity Studio gets its content types from         |
 | `/plugins`                                  | Where the advanced Sanity Studio customization is setup |
 | `/lib/sanity.api.ts`,`/lib/sanity.image.ts` | Configuration for the Sanity Content Lake client        |
@@ -126,7 +126,7 @@ You can remove it by deleting the `IntroTemplate` component in `/app/(personal)/
 - [How to query content?][sanity-groq]
 - [What is content modelling?][sanity-content-modelling]
 
-[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsanity-io%2Fsanity-template-nextjs-app-router-personal-website&project-name=nextjs-app-router-personal-website&repository-name=nextjs-app-router-personal-website&demo-title=Personal+Website+with+Built-in+Content+Editing&demo-description=A+Sanity-powered+personal+website+with+built-in+content+editing+and+instant+previews.+Uses+app+directory.&demo-url=https%3A%2F%2Ftemplate-nextjs-app-router-personal-website.sanity.build%2F&demo-image=https%3A%2F%2Fuser-images.githubusercontent.com%2F6951139%2F206395107-e58a796d-13a9-400a-94b6-31cb5df054ab.png&integration-ids=oac_hb2LITYajhRQ0i4QznmKH7gx&external-id=nextjs%3Btemplate%3Dsanity-template-nextjs-app-router-personal-website
+[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsanity-io%2Fsanity-template-nextjs-app-router-personal-website&project-name=nextjs-personal-website&repository-name=nextjs-personal-website&demo-title=Personal+Website+with+Built-in+Content+Editing&demo-description=A+Sanity-powered+personal+website+with+built-in+content+editing+and+instant+previews.+Uses+App+Router.&demo-url=https%3A%2F%2Ftemplate-nextjs-app-router-personal-website.sanity.build%2F&demo-image=https%3A%2F%2Fuser-images.githubusercontent.com%2F6951139%2F206395107-e58a796d-13a9-400a-94b6-31cb5df054ab.png&integration-ids=oac_hb2LITYajhRQ0i4QznmKH7gx&external-id=nextjs%3Btemplate%3Dsanity-template-nextjs-app-router-personal-website
 [integration]: https://www.sanity.io/docs/vercel-integration?utm_source=github.com&utm_medium=referral&utm_campaign=nextjs-v3vercelstarter
 [`.env.local.example`]: .env.local.example
 [nextjs]: https://github.com/vercel/next.js

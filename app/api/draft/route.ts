@@ -3,32 +3,31 @@ import { getClient } from 'lib/sanity.client'
 import { resolveHref } from 'lib/sanity.links'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { getSecret } from 'plugins/productionUrl/utils'
+import { isValidSecret } from 'sanity-plugin-iframe-pane/is-valid-secret'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
-  const documentType = searchParams.get('documentType')
-
-  if (!secret) {
-    return new Response('Invalid secret', { status: 401 })
-  }
+  const documentType = searchParams.get('type')
 
   const token = readToken
   if (!token) {
     throw new Error(
-      'A secret is provided but there is no `SANITY_API_READ_TOKEN` environment variable setup.',
+      'The `SANITY_API_READ_TOKEN` environment variable is required.',
     )
   }
-  const client = getClient().withConfig({ useCdn: false, token })
-  const generatedSecret = await getSecret(client, previewSecretId)
-  if (generatedSecret !== secret) {
+  if (!secret) {
+    return new Response('Invalid secret', { status: 401 })
+  }
+
+  const client = getClient().withConfig({ token })
+  const validSecret = await isValidSecret(client, previewSecretId, secret)
+  if (!validSecret) {
     return new Response('Invalid secret', { status: 401 })
   }
 
   const href = resolveHref(documentType!, slug!)
-
   if (!href) {
     return new Response(
       'Unable to resolve preview URL based on the current document type and slug',

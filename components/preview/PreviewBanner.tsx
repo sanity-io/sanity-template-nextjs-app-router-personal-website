@@ -1,14 +1,27 @@
+'use client'
+
+import { useSyncExternalStore } from 'react'
+
 /* eslint-disable @next/next/no-html-link-for-pages */
+const subscribe = () => () => {}
 
 export function PreviewBanner() {
+  const shouldShow = useSyncExternalStore(
+    subscribe,
+    () => window.top === window,
+    () => false,
+  )
+
+  if (!shouldShow) return null
+
   return (
     <div className="bg-black p-3 text-center text-white">
-      {'Previewing draft content. '}
+      {'Previewing drafts. '}
       <a
         className="underline transition hover:opacity-50"
-        href="/api/exit-preview"
+        href="/api/disable-draft"
       >
-        Exit preview mode
+        Back to published
       </a>
     </div>
   )
