@@ -12,6 +12,7 @@ import Iframe, {
   defineUrlResolver,
   IframeOptions,
 } from 'sanity-plugin-iframe-pane'
+import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
 import page from 'schemas/documents/page'
 import project from 'schemas/documents/project'
 import duration from 'schemas/objects/duration'
@@ -105,11 +106,3 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 })
-function previewUrl(arg0: {
-  base: string
-  requiresSlug: ('project' | 'page')[]
-  urlSecretId: `${string}.${string}`
-  matchTypes: ('home' | 'project' | 'page')[]
-}): any {
-  throw new Error('Function not implemented.')
-}
