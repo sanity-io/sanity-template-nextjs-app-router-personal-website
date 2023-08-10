@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@portabletext/react": "3.0.4",
-    "@sanity/client": "6.4.4",
+    "@sanity/client": "6.4.5",
     "@sanity/demo": "1.0.2",
     "@sanity/image-url": "1.0.2",
     "@sanity/vision": "3.15.0",
@@ -26,7 +26,7 @@
     "intl-segmenter-polyfill": "0.4.4",
     "next": "13.4.13",
     "next-google-fonts": "2.2.0",
-    "next-sanity": "5.2.3",
+    "next-sanity": "5.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
@@ -36,7 +36,7 @@
     "styled-components": "5.3.11"
   },
   "devDependencies": {
-    "@types/react": "18.2.19",
+    "@types/react": "18.2.20",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
