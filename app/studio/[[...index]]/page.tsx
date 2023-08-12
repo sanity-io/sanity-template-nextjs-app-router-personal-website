@@ -9,6 +9,8 @@
 
 import Studio from './Studio'
 
+export const runtime = 'edge'
+
 export { metadata } from 'next-sanity/studio/metadata'
 
 export default function StudioPage() {

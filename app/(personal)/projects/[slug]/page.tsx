@@ -1,18 +1,19 @@
 import { toPlainText } from '@portabletext/react'
 import { ProjectPage } from 'components/pages/project/ProjectPage'
 import ProjectPreview from 'components/pages/project/ProjectPreview'
-import { readToken } from 'lib/sanity.api'
-import { getClient } from 'lib/sanity.client'
 import {
-  homePageTitleQuery,
-  projectBySlugQuery,
-  projectPaths,
-} from 'lib/sanity.queries'
+  getHomePageTitle,
+  getProjectBySlug,
+  getProjectsPaths,
+} from 'lib/sanity.fetch'
+import { projectBySlugQuery } from 'lib/sanity.queries'
 import { defineMetadata } from 'lib/utils.metadata'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { ProjectPayload } from 'types'
+import { LiveQuery } from 'next-sanity/preview/live-query'
+
+export const runtime = 'edge'
 
 type Props = {
   params: { slug: string }
@@ -20,14 +21,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
 
   const [homePageTitle, project] = await Promise.all([
-    client.fetch<string | null>(homePageTitleQuery),
-    client.fetch<ProjectPayload | null>(projectBySlugQuery, {
-      slug,
-    }),
+    getHomePageTitle(),
+    getProjectBySlug(slug),
   ])
 
   return defineMetadata({
@@ -39,22 +36,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const client = getClient()
-  const slugs = await client.fetch<string[]>(projectPaths)
+  const slugs = await getProjectsPaths()
   return slugs.map((slug) => ({ slug }))
 }
 
 export default async function ProjectSlugRoute({ params }: Props) {
-  const { slug } = params
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
-  const data = await client.fetch<ProjectPayload | null>(projectBySlugQuery, {
-    slug,
-  })
+  const data = await getProjectBySlug(params.slug)
 
-  if (!data && !preview) {
+  if (!data && !draftMode().isEnabled) {
     notFound()
   }
 
-  return preview ? <ProjectPreview data={data} /> : <ProjectPage data={data} />
+  return (
+    <LiveQuery
+      enabled={draftMode().isEnabled}
+      query={projectBySlugQuery}
+      params={params}
+      initialData={data}
+      as={ProjectPreview}
+    >
+      <ProjectPage data={data} />
+    </LiveQuery>
+  )
 }

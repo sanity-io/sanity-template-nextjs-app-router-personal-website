@@ -1,19 +1,20 @@
 import { toPlainText } from '@portabletext/react'
 import { Page } from 'components/pages/page/Page'
 import PagePreview from 'components/pages/page/PagePreview'
-import { readToken } from 'lib/sanity.api'
-import { getClient } from 'lib/sanity.client'
 import {
-  homePageTitleQuery,
-  pagePaths,
-  pagesBySlugQuery,
-  settingsQuery,
-} from 'lib/sanity.queries'
+  getHomePageTitle,
+  getPageBySlug,
+  getPagesPaths,
+  getSettings,
+} from 'lib/sanity.fetch'
+import { pagesBySlugQuery } from 'lib/sanity.queries'
 import { defineMetadata } from 'lib/utils.metadata'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { PagePayload, SettingsPayload } from 'types'
+import { LiveQuery } from 'next-sanity/preview/live-query'
+
+export const runtime = 'edge'
 
 type Props = {
   params: { slug: string }
@@ -21,13 +22,11 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
 
   const [settings, page, homePageTitle] = await Promise.all([
-    client.fetch<SettingsPayload | null>(settingsQuery),
-    client.fetch<PagePayload | null>(pagesBySlugQuery, { slug }),
-    client.fetch<string | null>(homePageTitleQuery),
+    getSettings(),
+    getPageBySlug(slug),
+    getHomePageTitle(),
   ])
 
   return defineMetadata({
@@ -39,22 +38,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const client = getClient()
-  const slugs = await client.fetch<string[]>(pagePaths)
+  const slugs = await getPagesPaths()
   return slugs.map((slug) => ({ slug }))
 }
 
 export default async function PageSlugRoute({ params }: Props) {
-  const { slug } = params
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
-  const data = await client.fetch<PagePayload | null>(pagesBySlugQuery, {
-    slug,
-  })
+  const data = await getPageBySlug(params.slug)
 
-  if (!data && !preview) {
+  if (!data && !draftMode().isEnabled) {
     notFound()
   }
 
-  return preview ? <PagePreview data={data} /> : <Page data={data} />
+  return (
+    <LiveQuery
+      enabled={draftMode().isEnabled}
+      query={pagesBySlugQuery}
+      params={params}
+      initialData={data}
+      as={PagePreview}
+    >
+      <Page data={data} />
+    </LiveQuery>
+  )
 }

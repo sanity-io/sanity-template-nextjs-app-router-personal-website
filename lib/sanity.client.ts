@@ -1,27 +1,16 @@
-import { apiVersion, dataset, projectId, useCdn } from 'lib/sanity.api'
-import { createClient, type SanityClient } from 'next-sanity'
+import {
+  apiVersion,
+  dataset,
+  projectId,
+  revalidateSecret,
+} from 'lib/sanity.api'
+import { createClient } from 'next-sanity'
 
-/**
- * Checks if it's safe to create a client instance, as `@sanity/client` will throw an error if `projectId` is false
- */
-export function getClient(preview?: { token: string }): SanityClient {
-  const client = createClient({
-    projectId,
-    dataset,
-    apiVersion,
-    useCdn,
-    perspective: 'published',
-  })
-  if (preview) {
-    if (!preview.token) {
-      throw new Error('You must provide a token to preview drafts')
-    }
-    return client.withConfig({
-      token: preview.token,
-      useCdn: false,
-      ignoreBrowserTokenWarning: true,
-      perspective: 'previewDrafts',
-    })
-  }
-  return client
-}
+export const client = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  // If webhook revalidation is setup we want the freshest content, if not then it's best to use the speedy CDN
+  useCdn: revalidateSecret ? false : true,
+  perspective: 'published',
+})

@@ -1,9 +1,12 @@
-import { previewSecretId, readToken } from 'lib/sanity.api'
-import { getClient } from 'lib/sanity.client'
+import { previewSecretId } from 'lib/sanity.api'
+import { client } from 'lib/sanity.client'
+import { token } from 'lib/sanity.fetch'
 import { resolveHref } from 'lib/sanity.links'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { isValidSecret } from 'sanity-plugin-iframe-pane/is-valid-secret'
+
+export const runtime = 'edge'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -11,7 +14,6 @@ export async function GET(request: Request) {
   const slug = searchParams.get('slug')
   const documentType = searchParams.get('type')
 
-  const token = readToken
   if (!token) {
     throw new Error(
       'The `SANITY_API_READ_TOKEN` environment variable is required.',
@@ -21,8 +23,12 @@ export async function GET(request: Request) {
     return new Response('Invalid secret', { status: 401 })
   }
 
-  const client = getClient().withConfig({ token })
-  const validSecret = await isValidSecret(client, previewSecretId, secret)
+  const authenticatedClient = client.withConfig({ token })
+  const validSecret = await isValidSecret(
+    authenticatedClient,
+    previewSecretId,
+    secret,
+  )
   if (!validSecret) {
     return new Response('Invalid secret', { status: 401 })
   }
