@@ -1,23 +1,18 @@
 import { toPlainText } from '@portabletext/react'
 import { HomePage } from 'components/pages/home/HomePage'
 import HomePagePreview from 'components/pages/home/HomePagePreview'
-import { readToken } from 'lib/sanity.api'
-import { getClient } from 'lib/sanity.client'
-import { homePageQuery, settingsQuery } from 'lib/sanity.queries'
+import { getHomePage, getSettings } from 'lib/sanity.fetch'
+import { homePageQuery } from 'lib/sanity.queries'
 import { defineMetadata } from 'lib/utils.metadata'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { HomePagePayload, SettingsPayload } from 'types'
+import { LiveQuery } from 'next-sanity/preview/live-query'
+
+export const runtime = 'edge'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
-
-  const [settings, page] = await Promise.all([
-    client.fetch<SettingsPayload | null>(settingsQuery),
-    client.fetch<HomePagePayload | null>(homePageQuery),
-  ])
+  const [settings, page] = await Promise.all([getSettings(), getHomePage()])
 
   return defineMetadata({
     description: page?.overview ? toPlainText(page.overview) : '',
@@ -27,13 +22,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function IndexRoute() {
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
-  const data = await client.fetch<HomePagePayload | null>(homePageQuery)
+  const data = await getHomePage()
 
-  if (!data && !preview) {
+  if (!data && !draftMode().isEnabled) {
     notFound()
   }
 
-  return preview ? <HomePagePreview data={data} /> : <HomePage data={data} />
+  return (
+    <LiveQuery
+      enabled={draftMode().isEnabled}
+      query={homePageQuery}
+      initialData={data}
+      as={HomePagePreview}
+    >
+      <HomePage data={data} />
+    </LiveQuery>
+  )
 }

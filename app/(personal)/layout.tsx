@@ -1,45 +1,43 @@
 import 'styles/index.css'
 
-import type { PortableTextBlock } from '@portabletext/types'
 import { Footer } from 'components/global/Footer'
 import { Navbar } from 'components/global/Navbar'
 import { PreviewBanner } from 'components/preview/PreviewBanner'
-import PreviewProvider from 'components/preview/PreviewProvider'
 import IntroTemplate from 'intro-template'
-import { readToken } from 'lib/sanity.api'
-import { getClient } from 'lib/sanity.client'
-import { settingsQuery } from 'lib/sanity.queries'
+import { token } from 'lib/sanity.fetch'
+import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
-import { SettingsPayload } from 'types'
+import { Suspense } from 'react'
 
-const fallbackSettings: SettingsPayload = {
-  menuItems: [],
-  footer: [],
-}
+const PreviewProvider = dynamic(
+  () => import('components/preview/PreviewProvider'),
+)
 
 export default async function IndexRoute({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const preview = draftMode().isEnabled ? { token: readToken! } : undefined
-  const client = getClient(preview)
-  const settings =
-    (await client.fetch<SettingsPayload | null>(settingsQuery)) ??
-    fallbackSettings
+  const isDraftMode = draftMode().isEnabled
 
   const layout = (
     <div className="flex min-h-screen flex-col bg-white text-black">
-      {preview && <PreviewBanner />}
-      <Navbar menuItems={settings.menuItems} />
-      <div className="mt-20 flex-grow px-4 md:px-16 lg:px-32">{children}</div>
-      <Footer footer={settings.footer as PortableTextBlock[]} />
+      {isDraftMode && <PreviewBanner />}
+      <Suspense>
+        <Navbar />
+      </Suspense>
+      <div className="mt-20 flex-grow px-4 md:px-16 lg:px-32">
+        <Suspense>{children}</Suspense>
+      </div>
+      <Suspense>
+        <Footer />
+      </Suspense>
       <IntroTemplate />
     </div>
   )
 
-  if (preview) {
-    return <PreviewProvider token={preview.token}>{layout}</PreviewProvider>
+  if (isDraftMode) {
+    return <PreviewProvider token={token!}>{layout}</PreviewProvider>
   }
 
   return layout

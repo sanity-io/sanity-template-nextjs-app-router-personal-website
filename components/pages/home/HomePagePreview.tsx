@@ -1,17 +1,15 @@
 'use client'
 
-import { homePageQuery } from 'lib/sanity.queries'
-import { useLiveQuery } from 'next-sanity/preview'
-import type { HomePagePayload } from 'types'
+import dynamic from 'next/dynamic'
 
-import { HomePage, type HomePageProps } from './HomePage'
+import type { HomePageProps } from './HomePage'
 
-export default function HomePagePreview({ data: initialData }: HomePageProps) {
-  const [data] = useLiveQuery<HomePagePayload | null>(
-    initialData,
-    homePageQuery,
-  )
+// Re-exported components using next/dynamic ensures they're not bundled
+// and sent to the browser unless actually used, with draftMode().enabled.
 
+const HomePage = dynamic(() => import('./HomePage'))
+
+export default function HomePagePreview({ data }: HomePageProps) {
   if (!data) {
     return (
       <div className="text-center">

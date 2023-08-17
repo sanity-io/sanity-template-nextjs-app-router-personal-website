@@ -1,7 +1,6 @@
 import { CustomPortableText } from 'components/shared/CustomPortableText'
 import { Header } from 'components/shared/Header'
 import ImageBox from 'components/shared/ImageBox'
-import ScrollUp from 'components/shared/ScrollUp'
 import Link from 'next/link'
 import type { ProjectPayload } from 'types'
 
@@ -93,10 +92,10 @@ export function ProjectPage({ data }: ProjectPageProps) {
             value={description}
           />
         )}
-        {/* Workaround: scroll to top on route change */}
-        <ScrollUp />
       </div>
       <div className="absolute left-0 w-screen border-t" />
     </div>
   )
 }
+
+export default ProjectPage

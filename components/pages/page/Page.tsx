@@ -1,6 +1,5 @@
 import { CustomPortableText } from 'components/shared/CustomPortableText'
 import { Header } from 'components/shared/Header'
-import ScrollUp from 'components/shared/ScrollUp'
 import type { PagePayload } from 'types'
 
 export interface PageProps {
@@ -24,11 +23,10 @@ export function Page({ data }: PageProps) {
             value={body}
           />
         )}
-
-        {/* Workaround: scroll to top on route change */}
-        <ScrollUp />
       </div>
       <div className="absolute left-0 w-screen border-t" />
     </div>
   )
 }
+
+export default Page
