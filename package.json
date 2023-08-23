@@ -26,7 +26,7 @@
     "intl-segmenter-polyfill": "0.4.4",
     "next": "13.4.19",
     "next-google-fonts": "2.2.0",
-    "next-sanity": "5.4.4",
+    "next-sanity": "5.4.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
@@ -38,7 +38,7 @@
     "suspend-react": "0.1.3"
   },
   "devDependencies": {
-    "@types/react": "18.2.20",
+    "@types/react": "18.2.21",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
