@@ -6,7 +6,7 @@ import { homePageQuery } from 'lib/sanity.queries'
 import { defineMetadata } from 'lib/utils.metadata'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { LiveQuery } from 'next-sanity/preview/live-query'
 
 export const runtime = 'edge'
@@ -25,7 +25,18 @@ export default async function IndexRoute() {
   const data = await getHomePage()
 
   if (!data && !draftMode().isEnabled) {
-    notFound()
+    return (
+      <div className="text-center">
+        You don&rsquo;t have a homepage document yet,{' '}
+        <Link
+          href="/studio/desk/home%7C%2Cview%3Dpreview"
+          className="underline"
+        >
+          create one now
+        </Link>
+        !
+      </div>
+    )
   }
 
   return (
