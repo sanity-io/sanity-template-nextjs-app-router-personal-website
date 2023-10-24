@@ -3,6 +3,7 @@ import { Header } from 'components/shared/Header'
 import { resolveHref } from 'lib/sanity.links'
 import Link from 'next/link'
 import type { HomePagePayload } from 'types'
+import ScholarProfiles from 'components/shared/Scholar'
 
 export interface HomePageProps {
   data: HomePagePayload | null
@@ -26,6 +27,7 @@ export function HomePage({ data }: HomePageProps) {
             }
             return (
               <Link key={key} href={href}>
+                {/* <ScholarProfiles /> */}
                 <ProjectListItem project={project} odd={key % 2} />
               </Link>
             )

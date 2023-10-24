@@ -21,6 +21,7 @@
     "@sanity/vision": "3.18.1",
     "@tailwindcss/typography": "0.5.10",
     "@vercel/og": "0.5.19",
+    "antd": "^5.10.2",
     "classnames": "2.3.2",
     "date-fns": "2.30.0",
     "intl-segmenter-polyfill": "0.4.4",
@@ -32,6 +33,7 @@
     "sanity": "3.18.1",
     "sanity-plugin-asset-source-unsplash": "1.1.1",
     "sanity-plugin-iframe-pane": "2.6.0",
+    "scholarly": "^1.1.1",
     "server-only": "0.0.1",
     "styled-components": "5.3.11",
     "suspend-react": "0.1.3"
