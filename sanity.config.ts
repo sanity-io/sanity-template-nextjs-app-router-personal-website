@@ -20,6 +20,10 @@ import milestone from 'schemas/objects/milestone'
 import timeline from 'schemas/objects/timeline'
 import home from 'schemas/singletons/home'
 import settings from 'schemas/singletons/settings'
+import post from 'schemas/documents/post'
+import author from 'schemas/documents/author'
+import category from 'schemas/documents/category'
+import blockContent from 'schemas/documents/blockContent'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ||
@@ -62,6 +66,10 @@ export default defineConfig({
       settings,
       // Documents
       duration,
+      post,
+      author,
+      category,
+      blockContent,
       page,
       project,
       // Objects

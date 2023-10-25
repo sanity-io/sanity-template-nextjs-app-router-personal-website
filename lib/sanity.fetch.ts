@@ -7,14 +7,19 @@ import {
   homePageTitleQuery,
   pagePaths,
   pagesBySlugQuery,
+  homePostsQuery,
   projectBySlugQuery,
   projectPaths,
   settingsQuery,
+  postBySlugQuery,
 } from 'lib/sanity.queries'
 import { draftMode } from 'next/headers'
 import type {
   HomePagePayload,
+  HomePostPayload,
   PagePayload,
+  Post,
+  PostPayload,
   ProjectPayload,
   SettingsPayload,
 } from 'types'
@@ -112,4 +117,18 @@ export function getProjectsPaths() {
     {},
     { token, perspective: 'published' },
   )
+}
+
+export function getPosts() {
+  return sanityFetch<HomePostPayload | null>({
+    query: homePostsQuery,
+    tags: [],
+  })
+}
+export function getPostBySlug(slug: string) {
+  return sanityFetch<PostPayload | null>({
+    query: postBySlugQuery,
+    params: { slug },
+    tags: [`post:${slug}`],
+  })
 }

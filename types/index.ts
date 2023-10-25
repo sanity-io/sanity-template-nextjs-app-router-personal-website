@@ -64,3 +64,41 @@ export interface SettingsPayload {
   menuItems?: MenuItem[]
   ogImage?: Image
 }
+
+export interface HomePostPayload {
+  posts?: Post[]
+}
+
+export interface Post {
+  _type?: string
+  body?: PortableTextBlock[],
+  excerpt?: string,
+  slug?: Slug,
+  mainImage?: Image,
+  categories?: Category[],
+  title?: string,
+  _updatedAt?: string,
+  author?: string,
+  _createdAt?: string,
+  }
+
+export interface Category {
+  _type: string
+  description?: string
+  title?: string
+}
+
+export interface Slug {
+  current: string
+}
+
+export interface PostPayload {
+  _id?: string
+  title?: string
+  _rev?: string
+  _type?: string
+  body?: PortableTextBlock[]
+  _updatedAt?: string
+  slug?: Slug
+  author?: string
+}
