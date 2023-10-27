@@ -1,4 +1,5 @@
 {
+  "name": "sanity-template-nextjs-app-router-personal-website",
   "private": true,
   "scripts": {
     "build": "next build",
