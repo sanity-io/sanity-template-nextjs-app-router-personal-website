@@ -34,7 +34,7 @@
     "sanity-plugin-asset-source-unsplash": "1.1.2",
     "sanity-plugin-iframe-pane": "2.6.1",
     "server-only": "0.0.1",
-    "styled-components": "5.3.11",
+    "styled-components": "6.1.1",
     "suspend-react": "0.1.3"
   },
   "devDependencies": {
