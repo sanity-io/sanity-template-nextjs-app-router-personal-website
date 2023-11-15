@@ -16,10 +16,6 @@ export const homePageQuery = groq`
   }
 `
 
-export const homePageTitleQuery = groq`
-  *[_type == "home"][0].title
-`
-
 export const pagesBySlugQuery = groq`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
@@ -43,14 +39,6 @@ export const projectBySlugQuery = groq`
     tags,
     title,
   }
-`
-
-export const projectPaths = groq`
-  *[_type == "project" && slug.current != null].slug.current
-`
-
-export const pagePaths = groq`
-  *[_type == "page" && slug.current != null].slug.current
 `
 
 export const settingsQuery = groq`

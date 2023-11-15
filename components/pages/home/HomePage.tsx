@@ -1,14 +1,17 @@
-import { ProjectListItem } from 'components/pages/home/ProjectListItem'
-import { Header } from 'components/shared/Header'
-import { resolveHref } from 'lib/sanity.links'
+import type { EncodeDataAttributeCallback } from '@sanity/react-loader/rsc'
 import Link from 'next/link'
-import type { HomePagePayload } from 'types'
+
+import { ProjectListItem } from '@/components/pages/home/ProjectListItem'
+import { Header } from '@/components/shared/Header'
+import { resolveHref } from '@/sanity/lib/utils'
+import type { HomePagePayload } from '@/types'
 
 export interface HomePageProps {
   data: HomePagePayload | null
+  encodeDataAttribute?: EncodeDataAttributeCallback
 }
 
-export function HomePage({ data }: HomePageProps) {
+export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
   // Default to an empty object to allow previews on non-existent documents
   const { overview = [], showcaseProjects = [], title = '' } = data ?? {}
 
@@ -25,7 +28,15 @@ export function HomePage({ data }: HomePageProps) {
               return null
             }
             return (
-              <Link key={key} href={href}>
+              <Link
+                key={key}
+                href={href}
+                data-sanity={encodeDataAttribute?.([
+                  'showcaseProjects',
+                  key,
+                  'slug',
+                ])}
+              >
                 <ProjectListItem project={project} odd={key % 2} />
               </Link>
             )

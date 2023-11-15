@@ -1,61 +1,46 @@
 import { toPlainText } from '@portabletext/react'
-import { Page } from 'components/pages/page/Page'
-import PagePreview from 'components/pages/page/PagePreview'
-import {
-  getHomePageTitle,
-  getPageBySlug,
-  getPagesPaths,
-  getSettings,
-} from 'lib/sanity.fetch'
-import { pagesBySlugQuery } from 'lib/sanity.queries'
-import { defineMetadata } from 'lib/utils.metadata'
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
+import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { LiveQuery } from 'next-sanity/preview/live-query'
+
+import { Page } from '@/components/pages/page/Page'
+import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
+import { loadPage } from '@/sanity/loader/loadQuery'
+const PagePreview = dynamic(() => import('@/components/pages/page/PagePreview'))
 
 type Props = {
   params: { slug: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = params
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { data: page } = await loadPage(params.slug)
 
-  const [settings, page, homePageTitle] = await Promise.all([
-    getSettings(),
-    getPageBySlug(slug),
-    getHomePageTitle(),
-  ])
-
-  return defineMetadata({
-    baseTitle: homePageTitle ?? undefined,
-    description: page?.overview ? toPlainText(page.overview) : '',
-    image: settings?.ogImage,
+  return {
     title: page?.title,
-  })
+    description: page?.overview
+      ? toPlainText(page.overview)
+      : (await parent).description,
+  }
 }
 
-export async function generateStaticParams() {
-  const slugs = await getPagesPaths()
-  return slugs.map((slug) => ({ slug }))
+export function generateStaticParams() {
+  return generateStaticSlugs('page')
 }
 
 export default async function PageSlugRoute({ params }: Props) {
-  const data = await getPageBySlug(params.slug)
+  const initial = await loadPage(params.slug)
 
-  if (!data && !draftMode().isEnabled) {
+  if (draftMode().isEnabled) {
+    return <PagePreview params={params} initial={initial} />
+  }
+
+  if (!initial.data) {
     notFound()
   }
 
-  return (
-    <LiveQuery
-      enabled={draftMode().isEnabled}
-      query={pagesBySlugQuery}
-      params={params}
-      initialData={data}
-      as={PagePreview}
-    >
-      <Page data={data} />
-    </LiveQuery>
-  )
+  return <Page data={initial.data} />
 }

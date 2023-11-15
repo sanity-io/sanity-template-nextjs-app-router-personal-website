@@ -1,5 +1,6 @@
 'use client'
 
+import { studioUrl } from '@/sanity/lib/api'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -26,7 +27,7 @@ export default memo(function IntroTemplate() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setStudioURL(`${window.location.origin}/studio`)
+      setStudioURL(`${window.location.origin}${studioUrl}`)
       setIsLocalhost(window.location.hostname === 'localhost')
       setHasUTMtags(window.location.search.includes('utm'))
     }

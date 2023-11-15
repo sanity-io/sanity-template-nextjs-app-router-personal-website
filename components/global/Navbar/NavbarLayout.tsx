@@ -1,6 +1,7 @@
-import { resolveHref } from 'lib/sanity.links'
 import Link from 'next/link'
-import type { MenuItem, SettingsPayload } from 'types'
+
+import { resolveHref } from '@/sanity/lib/utils'
+import type { MenuItem, SettingsPayload } from '@/types'
 
 interface NavbarProps {
   data: SettingsPayload

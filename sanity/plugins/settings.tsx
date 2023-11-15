@@ -4,9 +4,6 @@
 
 import { type DocumentDefinition } from 'sanity'
 import { type StructureResolver } from 'sanity/desk'
-import { Iframe } from 'sanity-plugin-iframe-pane'
-
-import { iframeOptions, PREVIEWABLE_DOCUMENT_TYPES } from '../sanity.config'
 
 export const singletonPlugin = (types: string[]) => {
   return {
@@ -51,20 +48,7 @@ export const pageStructure = (
           S.editor()
             .id(typeDef.name)
             .schemaType(typeDef.name)
-            .documentId(typeDef.name)
-            .views([
-              // Default form view
-              S.view.form(),
-              // Preview
-              ...(PREVIEWABLE_DOCUMENT_TYPES.includes(typeDef.name as any)
-                ? [
-                    S.view
-                      .component(Iframe)
-                      .options(iframeOptions)
-                      .title('Preview'),
-                  ]
-                : []),
-            ]),
+            .documentId(typeDef.name),
         )
     })
 

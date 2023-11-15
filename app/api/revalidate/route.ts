@@ -22,10 +22,11 @@
  * 16. Redeploy with `npx vercel --prod` to apply the new environment variable
  */
 
-import { revalidateSecret } from 'lib/sanity.api'
 import { revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { parseBody } from 'next-sanity/webhook'
+
+import { revalidateSecret } from '@/sanity/lib/api'
 
 export async function POST(req: NextRequest) {
   try {

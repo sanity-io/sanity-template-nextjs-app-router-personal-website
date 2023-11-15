@@ -17,10 +17,6 @@ export const projectId = assertValue(
 export const apiVersion =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2023-06-21'
 
-// This is the document id used for the preview secret that's stored in your dataset.
-// The secret protects against unauthorized access to your draft content and have a lifetime of 60 minutes, to protect against bruteforcing.
-export const previewSecretId: `${string}.${string}` = 'preview.secret'
-
 // See the app/api/revalidate/route.ts for how this is used
 export const revalidateSecret = process.env.SANITY_REVALIDATE_SECRET
 
@@ -31,3 +27,7 @@ function assertValue<T>(v: T | undefined, errorMessage: string): T {
 
   return v
 }
+/**
+ * Used to configure edit intent links, for Presentation Mode, as well as to configure where the Studio is mounted in the router.
+ */
+export const studioUrl = '/studio'

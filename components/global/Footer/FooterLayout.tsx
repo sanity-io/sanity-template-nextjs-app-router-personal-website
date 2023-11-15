@@ -1,6 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import { CustomPortableText } from 'components/shared/CustomPortableText'
-import type { SettingsPayload } from 'types'
+
+import { CustomPortableText } from '@/components//shared/CustomPortableText'
+import type { SettingsPayload } from '@/types'
 
 interface FooterProps {
   data: SettingsPayload
