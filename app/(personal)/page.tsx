@@ -1,35 +1,26 @@
-import { toPlainText } from '@portabletext/react'
-import { HomePage } from 'components/pages/home/HomePage'
-import HomePagePreview from 'components/pages/home/HomePagePreview'
-import { getHomePage, getSettings } from 'lib/sanity.fetch'
-import { homePageQuery } from 'lib/sanity.queries'
-import { defineMetadata } from 'lib/utils.metadata'
-import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import Link from 'next/link'
-import { LiveQuery } from 'next-sanity/preview/live-query'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const [settings, page] = await Promise.all([getSettings(), getHomePage()])
-
-  return defineMetadata({
-    description: page?.overview ? toPlainText(page.overview) : '',
-    image: settings?.ogImage,
-    title: page?.title,
-  })
-}
+import { HomePage } from '@/components/pages/home/HomePage'
+import { studioUrl } from '@/sanity/lib/api'
+import { loadHomePage } from '@/sanity/loader/loadQuery'
+const HomePagePreview = dynamic(
+  () => import('@/components/pages/home/HomePagePreview'),
+)
 
 export default async function IndexRoute() {
-  const data = await getHomePage()
+  const initial = await loadHomePage()
 
-  if (!data && !draftMode().isEnabled) {
+  if (draftMode().isEnabled) {
+    return <HomePagePreview initial={initial} />
+  }
+
+  if (!initial.data) {
     return (
       <div className="text-center">
-        You don&rsquo;t have a homepage document yet,{' '}
-        <Link
-          href="/studio/desk/home%7C%2Cview%3Dpreview"
-          className="underline"
-        >
+        You don&rsquo;t have a homepage yet,{' '}
+        <Link href={`${studioUrl}/desk/home`} className="underline">
           create one now
         </Link>
         !
@@ -37,14 +28,5 @@ export default async function IndexRoute() {
     )
   }
 
-  return (
-    <LiveQuery
-      enabled={draftMode().isEnabled}
-      query={homePageQuery}
-      initialData={data}
-      as={HomePagePreview}
-    >
-      <HomePage data={data} />
-    </LiveQuery>
-  )
+  return <HomePage data={initial.data} />
 }

@@ -1,22 +1,17 @@
-import { getSettings } from 'lib/sanity.fetch'
-import { settingsQuery } from 'lib/sanity.queries'
+import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
-import { LiveQuery } from 'next-sanity/preview/live-query'
+
+import { loadSettings } from '@/sanity/loader/loadQuery'
 
 import NavbarLayout from './NavbarLayout'
-import NavbarPreview from './NavbarPreview'
+const NavbarPreview = dynamic(() => import('./NavbarPreview'))
 
 export async function Navbar() {
-  const data = await getSettings()
+  const initial = await loadSettings()
 
-  return (
-    <LiveQuery
-      enabled={draftMode().isEnabled}
-      query={settingsQuery}
-      initialData={data}
-      as={NavbarPreview}
-    >
-      <NavbarLayout data={data} />
-    </LiveQuery>
-  )
+  if (draftMode().isEnabled) {
+    return <NavbarPreview initial={initial} />
+  }
+
+  return <NavbarLayout data={initial.data} />
 }

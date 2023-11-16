@@ -19,6 +19,9 @@ const config = {
       fullUrl: true,
     },
   },
+  experimental: {
+    taint: true,
+  },
 }
 
 export default config

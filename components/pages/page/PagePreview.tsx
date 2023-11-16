@@ -1,8 +1,23 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import { type QueryResponseInitial } from '@sanity/react-loader/rsc'
 
-// Re-exported components using next/dynamic ensures they're not bundled
-// and sent to the browser unless actually used, with draftMode().enabled.
+import { pagesBySlugQuery } from '@/sanity/lib/queries'
+import { useQuery } from '@/sanity/loader/useQuery'
+import { PagePayload } from '@/types'
 
-export default dynamic(() => import('./Page'))
+import Page from './Page'
+
+type Props = {
+  params: { slug: string }
+  initial: QueryResponseInitial<PagePayload | null>
+}
+
+export default function PagePreview(props: Props) {
+  const { params, initial } = props
+  const { data } = useQuery<PagePayload | null>(pagesBySlugQuery, params, {
+    initial,
+  })
+
+  return <Page data={data!} />
+}

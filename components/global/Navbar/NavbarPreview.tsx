@@ -1,8 +1,15 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import { useSettings } from '@/sanity/loader/useQuery'
 
-// Re-exported components using next/dynamic ensures they're not bundled
-// and sent to the browser unless actually used, with draftMode().enabled.
+import NavbarLayout from './NavbarLayout'
 
-export default dynamic(() => import('./NavbarLayout'))
+type Props = {
+  initial: Parameters<typeof useSettings>[0]
+}
+
+export default function NavbarPreview(props: Props) {
+  const { data } = useSettings(props.initial)
+
+  return <NavbarLayout data={data!} />
+}
